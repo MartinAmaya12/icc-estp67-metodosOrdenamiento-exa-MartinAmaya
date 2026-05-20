@@ -1,11 +1,40 @@
+import controllers.BrandController;
 import models.Brand;
 import models.CarModel;
 import models.CarYear;
+import test.TestData;
 
 public class App {
         public static void main(String[] args) throws Exception {
                 System.out.println("Examen interciclo de Estructuras de Datos");
                 System.out.println("====Configurar studente.env====");
+
+                Brand[] marcas = TestData.createBrands();
+        BrandController controller = new BrandController();
+
+        // 2. Mostrar original
+        System.out.println("Original:");
+        for(Brand b : marcas) System.out.println(b.getBrandName() + " - Años válidos: " + b.getTotalValidYears());
+
+        // 3. Ordenar (Fila D: Bubble Sort Descendente)
+        controller.sortBubbleDesc(marcas);
+        System.out.println("\nOrdenado por Bubble Sort descendente:");
+        for(Brand b : marcas) System.out.println(b.getBrandName() + " - Años válidos: " + b.getTotalValidYears());
+
+        // 4. Búsqueda Binaria (Ejemplo para Fila D: Buscar 7 años, false)
+        int buscar = 7;
+        boolean ordenAscendente = false; // Como es BubbleDesc, es false
+        
+        Brand encontrada = controller.binarySearchByValidYears(marcas, buscar, ordenAscendente);
+        
+        System.out.println("\nBuscar marca con " + buscar + " años válidos:");
+        if (encontrada != null) {
+            System.out.println("Encontrada: Marca: " + encontrada.getBrandName() + 
+                               ", Total de años válidos: " + encontrada.getTotalValidYears());
+        } else {
+            System.out.println("No encontrada");
+        }
+    }
 
         }
 
@@ -204,6 +233,6 @@ public class App {
                 Brand hyundai = new Brand("Hyundai", hyundaiModels);
 
                 return new Brand[] { honda, toyota, ford, chevrolet, nissan, mazda, hyundai };
-        }
-
 }
+
+
