@@ -28,7 +28,7 @@ public class BrandController {
     int bajo = 0;
     int alto = brands.length - 1;
     while(bajo <= alto){
-      int centro = (bajo + alto)/2;
+      int centro = bajo + (alto - bajo) / 2;
       int valorCentro = brands[centro].getTotalValidYears();
       if(valorCentro == validYears){
         return brands[centro];
