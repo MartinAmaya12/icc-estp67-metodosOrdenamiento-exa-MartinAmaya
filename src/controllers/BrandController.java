@@ -3,56 +3,43 @@ package controllers;
 import models.Brand;
 
 public class BrandController {
-  public Brand[]  sortBubbleDesc(Brand[] brands){
+  public Brand[] sortSelectionDesc(Brand[]brands){
     int n = brands.length;
-
-    for(int i = 0; i < n - 1; i++){
-      boolean cambio = false;
-      for(int j = 1; j < n - 1 - i; j++){
-        int anioAct = brands[j].getTotalValidYears();
-        int anioSig = brands[j + 1].getTotalValidYears();
-
-        if(anioAct < anioSig){
-          Brand aux = brands[j];
-          brands[j] = brands[j + 1];
-          brands[j + 1] = aux;
-          cambio = true;
+    for(int i = 0; i < n -1; i++){
+      int maxIndex = i;
+      for(int j = i + 1; j < n; j++){
+        if(brands[j].getTotalValidYears() > brands[maxIndex].getTotalValidYears()){
+          maxIndex = j;
         }
       }
-      if(! cambio){
-        break;
+      if(maxIndex != i){
+        Brand temp = brands[i];
+        brands[i] = brands[maxIndex];
+        brands[maxIndex] = temp;
       }
     }
 
     return brands;
   }
 
-  public Brand binarySearchByValidYears(Brand[] brands, int validYears, boolean isAscending){
+  public Brand binarySearchByValidYears(Brand[] brands, int validYears,boolean isAscending){
+    
+    //inicializar indices
     int bajo = 0;
-    int alto = 0;
+    int alto = brands.length - 1;
     while(bajo <= alto){
       int centro = (bajo + alto)/2;
-      int aniosCentro = brands[centro].getTotalValidYears();
-      if(aniosCentro == validYears){
+      int valorCentro = brands[centro].getTotalValidYears();
+      if(valorCentro == validYears){
         return brands[centro];
+      }else if(isAscending){
+        alto = centro + 1;
+      }else{
+        bajo = centro - 1; 
       }
 
-      if (isAscending) {
-            if (aniosCentro < validYears) {
-                bajo = centro + 1;
-            } else {
-                alto = centro - 1;
-            }
-        } else {
-            if (aniosCentro > validYears) {
-                bajo = centro + 1;
-            } else {
-                alto = centro - 1;
-            }
-        }
     }
-
-
+    
     return null;
   }
 }
