@@ -33,9 +33,9 @@ public class BrandController {
       if(valorCentro == validYears){
         return brands[centro];
       }else if(isAscending){
-        alto = centro + 1;
+        bajo = centro + 1;
       }else{
-        bajo = centro - 1; 
+        alto = centro - 1; 
       }
 
     }
