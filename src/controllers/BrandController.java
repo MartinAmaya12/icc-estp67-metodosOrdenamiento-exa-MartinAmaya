@@ -22,24 +22,33 @@ public class BrandController {
     return brands;
   }
 
-  public Brand binarySearchByValidYears(Brand[] brands, int validYears,boolean isAscending){
-    
-    //inicializar indices
+  public Brand binarySearchByValidYears(Brand[] brands, int validYears, boolean isAscending) {
     int bajo = 0;
     int alto = brands.length - 1;
-    while(bajo <= alto){
-      int centro = bajo + (alto - bajo) / 2;
-      int valorCentro = brands[centro].getTotalValidYears();
-      if(valorCentro == validYears){
-        return brands[centro];
-      }else if(isAscending){
-        bajo = centro + 1;
-      }else{
-        alto = centro - 1; 
-      }
 
+    while (bajo <= alto) {
+        int centro = bajo + (alto - bajo) / 2;
+        int valorCentro = brands[centro].getTotalValidYears();
+
+        if (valorCentro == validYears) {
+            return brands[centro];
+        }
+
+        if (isAscending) {
+            if (valorCentro < validYears) {
+                bajo = centro + 1;
+            } else {
+                alto = centro - 1;
+            }
+        } else { 
+            if (valorCentro < validYears) {
+                alto = centro - 1; 
+            } else {
+                bajo = centro + 1;
+            }
+        }
     }
-    
-    return null;
-  }
+
+    return null; 
+}
 }
